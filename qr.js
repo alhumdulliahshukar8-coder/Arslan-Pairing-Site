@@ -8,7 +8,7 @@ const fs = require('fs');
 let router = express.Router()
 const pino = require("pino");
 const {
-	default: Mbuvi_Tech,
+	default: Arslan_Tech,
 	useMultiFileAuthState,
 	jidNormalizedUser,
 	Browsers,
@@ -28,13 +28,13 @@ const {
 } = require("node:fs/promises")
 router.get('/', async (req, res) => {
 	const id = makeid();
-	async function MBUVI_MD_QR_CODE() {
+	async function Arslan_MD_QR_CODE() {
 		const {
 			state,
 			saveCreds
 		} = await useMultiFileAuthState('./temp/' + id)
 		try {
-			let Qr_Code_By_Mbuvi_Tech = Mbuvi_Tech({
+			let Qr_Code_By_Arslan_Tech = Arslan_Tech({
 				auth: state,
 				printQRInTerminal: false,
 				logger: pino({
@@ -43,8 +43,8 @@ router.get('/', async (req, res) => {
 				browser: Browsers.macOS("Desktop"),
 			});
 
-			Qr_Code_By_Mbuvi_Tech.ev.on('creds.update', saveCreds)
-			Qr_Code_By_Mbuvi_Tech.ev.on("connection.update", async (s) => {
+			Qr_Code_By_Arslan_Tech.ev.on('creds.update', saveCreds)
+			Qr_Code_By_Arslan_Tech.ev.on("connection.update", async (s) => {
 				const {
 					connection,
 					lastDisconnect,
@@ -56,9 +56,9 @@ router.get('/', async (req, res) => {
 					let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
 					await delay(800);
 				   let b64data = Buffer.from(data).toString('base64');
-				   let session = await Qr_Code_By_Mbuvi_Tech.sendMessage(Qr_Code_By_Mbuvi_Tech.user.id, { text: 'ARSLAN-MD~' + b64data });
+				   let session = await Qr_Code_By_Arslan_Tech.sendMessage(Qr_Code_By_Arslan_Tech.user.id, { text: 'ARSLAN-MD~' + b64data });
 	
-				   let MBUVI_MD_TEXT = `
+				   let Arslan_MD_TEXT = `
 ╔════════════════════◇
 ║『 SESSION CONNECTED』
 ║ ✨Arslan-MD🔷
@@ -90,16 +90,16 @@ router.get('/', async (req, res) => {
 
 Don't Forget To Give Star⭐ To My Repo
 ______________________________`;
-	 await Qr_Code_By_Mbuvi_Tech.sendMessage(Qr_Code_By_Mbuvi_Tech.user.id,{text:MBUVI_MD_TEXT},{quoted:session})
+	 await Qr_Code_By_Arslan_Tech.sendMessage(Qr_Code_By_Arslan_Tech.user.id,{text:Arslan_MD_TEXT},{quoted:session})
 
 
 
 					await delay(100);
-					await Qr_Code_By_Mbuvi_Tech.ws.close();
+					await Qr_Code_By_Arslan_Tech.ws.close();
 					return await removeFile("temp/" + id);
 				} else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
 					await delay(10000);
-					MBUVI_MD_QR_CODE();
+					Arslan_MD_QR_CODE();
 				}
 			});
 		} catch (err) {
@@ -112,6 +112,6 @@ ______________________________`;
 			await removeFile("temp/" + id);
 		}
 	}
-	return await MBUVI_MD_QR_CODE()
+	return await Arslan_MD_QR_CODE()
 });
 module.exports = router
